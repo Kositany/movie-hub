@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Omit these keys from secrets scanning since they're meant to be public Vite env vars
+  SECRETS_SCAN_OMIT_KEYS = "VITE_APPWRITE_PROJECT_ID,VITE_APPWRITE_PROJECT_NAME,VITE_APPWRITE_ENDPOINT,VITE_APPWRITE_DATABASE_ID,VITE_APPWRITE_COLLECTION_ID,VITE_TMDB_API_KEY"
+  
+  # Alternative: Omit build output paths if secrets are detected in dist
+  SECRETS_SCAN_OMIT_PATHS = "dist/assets/*"
