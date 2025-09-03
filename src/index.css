@@ -101,16 +101,122 @@
   .all-movies {
     @apply space-y-9;
 
+    & .movies-header {
+      @apply flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6;
+    }
+
+    & .movies-header h2 {
+      @apply text-2xl font-bold text-white sm:text-3xl;
+    }
+
     & ul {
       @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
     }
   }
 
-  .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+  /* Filter Styles */
+  .filter-container {
+    @apply relative;
+  }
 
-    & img {
-      @apply rounded-lg h-auto w-full;
+  .filter-toggle {
+    @apply bg-light-100/10 border border-light-100/20 text-white px-4 py-2 rounded-lg font-medium hover:bg-light-100/20 transition-all flex items-center gap-2 backdrop-blur-sm;
+  }
+
+  .filter-badge {
+    @apply bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold;
+  }
+
+  .filter-panel {
+    @apply absolute top-12 right-0 bg-dark-100/95 backdrop-blur-md border border-light-100/20 rounded-xl p-6 shadow-2xl z-20 w-80 max-w-sm;
+  }
+
+  .filter-header {
+    @apply flex justify-between items-center mb-4 pb-3 border-b border-light-100/20;
+  }
+
+  .filter-header h3 {
+    @apply text-white font-bold text-lg;
+  }
+
+  .clear-filters {
+    @apply text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors;
+  }
+
+  .filter-section {
+    @apply mb-6;
+  }
+
+  .filter-section h4 {
+    @apply text-light-200 font-semibold mb-3 text-sm uppercase tracking-wider;
+  }
+
+  .genre-grid {
+    @apply grid grid-cols-2 gap-2;
+  }
+
+  .genre-tag {
+    @apply bg-light-100/10 border border-light-100/20 text-light-200 text-xs px-3 py-2 rounded-full cursor-pointer hover:bg-light-100/20 transition-all text-center;
+  }
+
+  .genre-tag.selected {
+    @apply bg-purple-600 border-purple-500 text-white hover:bg-purple-700;
+  }
+
+  .filter-select {
+    @apply w-full bg-light-100/10 border border-light-100/20 text-white px-3 py-2 rounded-lg focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all;
+  }
+
+  .filter-select option {
+    @apply bg-dark-100 text-white;
+  }
+
+  /* Infinite Scroll Indicators */
+  .loading-more {
+    @apply flex flex-col items-center justify-center py-8 space-y-4;
+  }
+
+  .loading-more p {
+    @apply text-gray-300 text-lg;
+  }
+
+  .end-of-results {
+    @apply text-center py-8;
+  }
+
+  .end-of-results p {
+    @apply text-gray-400 text-lg font-medium;
+  }
+
+  .movie-card {
+    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10 cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-xl;
+
+    & .movie-card-image-container {
+      @apply relative overflow-hidden rounded-lg;
+    }
+
+    & .movie-card-image-container img {
+      @apply rounded-lg h-auto w-full transition-transform duration-300;
+    }
+
+    & .movie-card-overlay {
+      @apply absolute inset-0 bg-black/80 text-white p-4 flex flex-col justify-end opacity-0 transition-opacity duration-300;
+    }
+
+    &:hover .movie-card-overlay {
+      @apply opacity-100;
+    }
+
+    & .movie-overview h4 {
+      @apply text-lg font-bold mb-2 text-white;
+    }
+
+    & .movie-overview p {
+      @apply text-sm text-gray-300 mb-3 line-clamp-4;
+    }
+
+    & .view-details-btn {
+      @apply bg-purple-600 text-white px-3 py-1 rounded text-sm font-semibold hover:bg-purple-700 transition-colors;
     }
 
     & h3 {
@@ -144,6 +250,125 @@
     & .content .year {
       @apply text-gray-100 font-medium text-base;
     }
+  }
+
+  /* Modal Styles */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4;
+  }
+
+  .modal-content {
+    @apply bg-dark-100 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl;
+  }
+
+  .modal-close {
+    @apply absolute top-4 right-4 text-white text-3xl font-bold bg-black/50 w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/70 transition-colors z-10;
+  }
+
+  .modal-loading {
+    @apply flex flex-col items-center justify-center p-12;
+  }
+
+  .modal-loading .spinner {
+    @apply w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mb-4;
+  }
+
+  .modal-loading p {
+    @apply text-white text-lg;
+  }
+
+  .modal-body {
+    @apply p-6;
+  }
+
+  .modal-header {
+    @apply flex flex-col md:flex-row gap-6 mb-8;
+  }
+
+  .modal-poster {
+    @apply w-full md:w-80 h-auto rounded-lg shadow-lg mx-auto md:mx-0;
+  }
+
+  .modal-info {
+    @apply flex-1 space-y-4;
+  }
+
+  .modal-info h1 {
+    @apply text-3xl md:text-4xl font-bold text-white leading-tight;
+  }
+
+  .tagline {
+    @apply text-gray-300 text-lg italic;
+  }
+
+  .movie-stats {
+    @apply flex flex-wrap gap-4 items-center;
+  }
+
+  .stat {
+    @apply flex items-center gap-2 text-white;
+  }
+
+  .stat img {
+    @apply w-5 h-5;
+  }
+
+  .genres {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .genre-tag {
+    @apply bg-purple-600 text-white px-3 py-1 rounded-full text-sm;
+  }
+
+  .modal-sections {
+    @apply space-y-8;
+  }
+
+  .overview-section h2,
+  .cast-section h2,
+  .details-section h2 {
+    @apply text-2xl font-bold text-white mb-4;
+  }
+
+  .overview-section p {
+    @apply text-gray-300 leading-relaxed text-lg;
+  }
+
+  .cast-grid {
+    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4;
+  }
+
+  .cast-member {
+    @apply text-center;
+  }
+
+  .cast-member img {
+    @apply w-full h-32 object-cover rounded-lg mb-2;
+  }
+
+  .actor-name {
+    @apply text-white font-semibold text-sm;
+  }
+
+  .character-name {
+    @apply text-gray-400 text-xs;
+  }
+
+  .details-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+
+  .detail-item {
+    @apply flex justify-between items-center py-2 border-b border-gray-700;
+  }
+
+  .detail-item strong {
+    @apply text-white;
+  }
+
+  .detail-item span {
+    @apply text-gray-300;
   }
 }
 
